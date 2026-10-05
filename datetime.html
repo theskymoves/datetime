@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clock Screensaver</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: white;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: monospace;
+            overflow: hidden;
+        }
+        #clock-container {
+            font-size: 12rem;
+            position: relative;
+            text-align: center;
+        }
+        #date {
+            font-size: 8rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="clock-container">
+        <div id="time"></div>
+        <div id="date"></div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const timeElement = document.getElementById('time');
+            const dateElement = document.getElementById('date');
+            
+            // Format time
+            const timeString = now.toLocaleTimeString();
+            timeElement.textContent = timeString;
+            
+            // Format date
+            const dateString = now.toLocaleDateString(undefined, {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            dateElement.textContent = dateString;
+        }
+
+        function shiftPosition() {
+            const container = document.getElementById('clock-container');
+            const maxShift = 50; // Maximum pixel shift
+            
+            // Generate random position within bounds
+            const x = Math.floor(Math.random() * maxShift - maxShift/2);
+            const y = Math.floor(Math.random() * maxShift - maxShift/2);
+            
+            container.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        // Update clock every second
+        setInterval(updateClock, 1000);
+        
+        // Shift position every 10 seconds
+        setInterval(shiftPosition, 10000);
+
+        // Initial updates
+        updateClock();
+        shiftPosition();
+    </script>
+</body>
+</html>
